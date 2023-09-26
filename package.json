@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "start": "node src/server.js",
-      "start-dev": "nodemon src/server.js"
+    "start": "node src/server.js",
+    "start-dev": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/nuritaekaw/bookshelf-API/issues"
   },
-  "homepage": "https://github.com/nuritaekaw/bookshelf-API#readme"
+  "homepage": "https://github.com/nuritaekaw/bookshelf-API#readme",
+  "dependencies": {
+    "@hapi/hapi": "^21.3.2"
+  }
 }
