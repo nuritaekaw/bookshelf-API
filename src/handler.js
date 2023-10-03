@@ -12,7 +12,7 @@ const addBookHandler = (request, h) => {
 
     books.push(newBook);
 
-    if(name === ''){
+    if(name === undefined){
         const response = h.response({
            status: 'fail',
            message: 'Gagal menambahkan buku. Mohon isi nama buku'
