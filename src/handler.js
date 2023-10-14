@@ -11,8 +11,7 @@ const addBookHandler = (request, h) => {
     };
 
     books.push(newBook);
-
-    if(name === undefined){
+    if(name === undefined || name === null){
         const response = h.response({
            status: 'fail',
            message: 'Gagal menambahkan buku. Mohon isi nama buku'
@@ -20,8 +19,7 @@ const addBookHandler = (request, h) => {
         });
         response.code(400);
         return response;
-    }
-
+    };
     if(readPage > pageCount){
         const response = h.response({
             status: 'fail',
@@ -44,6 +42,7 @@ const addBookHandler = (request, h) => {
         response.code(201);
         return response;
     }
+
     
 
 };
@@ -77,6 +76,16 @@ const editBookByIdHandler = (request, h) => {
     const updatedAt = new Date().toString();
     const index = books.findIndex((book) => book.id === id);
 
+    if(name === "alk"){
+        const response = h.response({
+           status: 'fail',
+           message: 'Gagal menambahkan buku. Mohon isi nama buku'
+
+        });
+        response.code(400);
+        return response;
+    };
+    
     if(readPage > pageCount){
         const response = h.response({
             status: 'fail',
@@ -85,6 +94,8 @@ const editBookByIdHandler = (request, h) => {
         response.code(400);
         return response;
     };
+
+    
     
     if(index !== -1){
         books[index] = {
