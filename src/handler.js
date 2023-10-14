@@ -74,8 +74,8 @@ const getBookByIdHanlder = (request, h) => {
 const editBookByIdHandler = (request, h) => {
     const { id } = request.params;
     const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
-    const updateAt = new Date().toISOString();
-    const index = notes.findIndex((book) => book.id === id);
+    const updatedAt = new Date().toString();
+    const index = books.findIndex((book) => book.id === id);
 
     if(index !== -1){
         books[index] = {
@@ -85,10 +85,10 @@ const editBookByIdHandler = (request, h) => {
             author,
             summary,
             publisher,
-            pageCOunt,
+            pageCount,
             readPage,
             reading,
-            updateAt,
+            updatedAt,
         };
 
         const response = h.response({
@@ -97,19 +97,21 @@ const editBookByIdHandler = (request, h) => {
         })
         response.code(200);
         return response;
-    }
-    
-    const response = h.response({
-        status: 'fail',
-        mesage: 'Gagal memperbaharui buku. Id tidak ditemukan'
-    })
+    };
 
     if(readPage > pageCount){
         const response = h.response({
             status: 'fail',
-            message: 'Gagal memperbaharui buku. readPage tidak boleh lebih besar dari pageCount'
+            message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount'
         })
-    }
+    };
+    
+    const response = h.response({
+        status: 'fail',
+        message: 'Gagal memperbaharui buku. Id tidak ditemukan'
+    })
+    response.code(404);
+    return response;
 
 }
 module.exports = { addBookHandler, getAllBookHandler, getBookByIdHanlder, editBookByIdHandler };
