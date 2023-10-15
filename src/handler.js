@@ -11,7 +11,7 @@ const addBookHandler = (request, h) => {
     };
 
     books.push(newBook);
-    if(name === undefined || name === null){
+    if(name === undefined){
         const response = h.response({
            status: 'fail',
            message: 'Gagal menambahkan buku. Mohon isi nama buku'
@@ -76,7 +76,7 @@ const editBookByIdHandler = (request, h) => {
     const updatedAt = new Date().toString();
     const index = books.findIndex((book) => book.id === id);
 
-    if(name === "alk"){
+    if(name === undefined){
         const response = h.response({
            status: 'fail',
            message: 'Gagal menambahkan buku. Mohon isi nama buku'
