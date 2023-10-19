@@ -5,9 +5,10 @@ const addBookHandler = (request, h) => {
     const id = nanoid(15);
     const insertedAt = new Date().toISOString();
     const updateAt = insertedAt;
+    const finished = false;
 
     const newBook = {
-        name, year, author, summary, publisher, pageCount, readPage, reading, id, insertedAt, updateAt
+        id, name, year, author, summary, publisher, pageCount, readPage, finished, reading, insertedAt, updateAt
     };
 
     books.push(newBook);
@@ -27,6 +28,9 @@ const addBookHandler = (request, h) => {
         });
         response.code(400);
         return response;
+    }
+    if(pageCount === readPage){
+        finished = true;
     }
 
     const isSuccess = books.filter((book) => book.id === id).length > 0;
