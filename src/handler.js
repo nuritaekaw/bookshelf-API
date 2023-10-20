@@ -50,12 +50,34 @@ const addBookHandler = (request, h) => {
     
 
 };
-const getAllBookHandler = () => ({
-    status: 'success',
-    data: {
-        books
+const getAllBookHandler = (request, h) => {
+    const { name } = request.query;
+    if(name === undefined){
+        return {
+        status: 'success',
+        data: {
+                books
+            }
+        }
     }
-});
+    nameBook = books.filter((b) => b.name === name)[0];
+    if(nameBook){
+        return{
+            status: 'success',
+            data: {
+             books: books.filter(book => book.name.toLowerCase() === name.toLowerCase())
+                
+            },
+        };
+    }
+    const response = h.response({
+        status: 'fail',
+        message: 'Buku tidak ditemukan',
+    });
+    response.code(404);
+    return response;
+        
+};
 const getBookByIdHanlder = (request, h) => {
     const { id } = request.params;
     const book = books.filter((b) => b.id === id)[0];
@@ -74,6 +96,26 @@ const getBookByIdHanlder = (request, h) => {
     response.code(404);
     return response;
 };
+
+const getBookByNameHanlder = (request, h) => {
+    const { name } = request.query;
+    const book = books.filter((b) => b.name === name)[0];
+    if(book !== undefined){
+        return{
+            status: 'success',
+            data: {
+                book,
+            },
+        };
+    }
+    const response = h.response({
+        status: 'fail',
+        message: 'Buku tidak ditemukan',
+    });
+    response.code(404);
+    return response;
+};
+
 const editBookByIdHandler = (request, h) => {
     const { id } = request.params;
     const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
@@ -147,4 +189,4 @@ const deleteBookByIdHandler = (request, h) => {
     return response;
 
 }
-module.exports = { addBookHandler, getAllBookHandler, getBookByIdHanlder, editBookByIdHandler, deleteBookByIdHandler };
+module.exports = { addBookHandler, getAllBookHandler, getBookByIdHanlder, getBookByNameHanlder, editBookByIdHandler, deleteBookByIdHandler };
